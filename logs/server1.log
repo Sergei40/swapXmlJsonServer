@@ -1,0 +1,42 @@
+22.08.2021 16:40:48.754 0 DEBUG    0x00003864 QtWebApp has version 1.8.3
+22.08.2021 16:40:48.754 0 DEBUG    0x00003864 StaticFileController: docroot=D:/Alpha/SwapJsonXmlServer/docroot, encoding=UTF-8, maxAge=90000
+22.08.2021 16:40:48.754 0 DEBUG    0x00003864 StaticFileController: cache timeout=60000, size=1000000
+22.08.2021 16:40:48.754 0 DEBUG    0x00003864 RequestMapper: created
+22.08.2021 16:40:48.762 0 DEBUG    0x00003864 HttpListener: Listening on port 8080
+22.08.2021 16:40:48.762 1 WARNING  0x00003864 Application has started
+22.08.2021 16:42:50.130 0 DEBUG    0x00003a8c QtWebApp has version 1.8.3
+22.08.2021 16:42:50.130 0 DEBUG    0x00003a8c StaticFileController: docroot=D:/Alpha/SwapJsonXmlServer/docroot, encoding=UTF-8, maxAge=90000
+22.08.2021 16:42:50.130 0 DEBUG    0x00003a8c StaticFileController: cache timeout=60000, size=1000000
+22.08.2021 16:42:50.130 0 DEBUG    0x00003a8c RequestMapper: created
+22.08.2021 16:42:50.138 0 DEBUG    0x00003a8c HttpListener: Listening on port 8080
+22.08.2021 16:42:50.138 1 WARNING  0x00003a8c Application has started
+22.08.2021 16:43:40.710 0 DEBUG    0x00003d8c QtWebApp has version 1.8.3
+22.08.2021 16:43:40.710 0 DEBUG    0x00003d8c StaticFileController: docroot=D:/Alpha/SwapJsonXmlServer/docroot, encoding=UTF-8, maxAge=90000
+22.08.2021 16:43:40.710 0 DEBUG    0x00003d8c StaticFileController: cache timeout=60000, size=1000000
+22.08.2021 16:43:40.710 0 DEBUG    0x00003d8c RequestMapper: created
+22.08.2021 16:43:40.718 0 DEBUG    0x00003d8c HttpListener: Listening on port 8080
+22.08.2021 16:43:40.718 1 WARNING  0x00003d8c Application has started
+22.08.2021 17:15:48.031 0 DEBUG    0x0000377c QtWebApp has version 1.8.3
+22.08.2021 17:15:48.031 0 DEBUG    0x0000377c StaticFileController: docroot=D:/Alpha/SwapJsonXmlServer/docroot, encoding=UTF-8, maxAge=90000
+22.08.2021 17:15:48.031 0 DEBUG    0x0000377c StaticFileController: cache timeout=60000, size=1000000
+22.08.2021 17:15:48.031 0 DEBUG    0x0000377c RequestMapper: created
+22.08.2021 17:15:48.040 0 DEBUG    0x0000377c HttpListener: Listening on port 8080
+22.08.2021 17:15:48.040 1 WARNING  0x0000377c Application has started
+22.08.2021 17:17:15.597 0 DEBUG    0x00004114 QtWebApp has version 1.8.3
+22.08.2021 17:17:15.597 0 DEBUG    0x00004114 StaticFileController: docroot=D:/Alpha/SwapJsonXmlServer/docroot, encoding=UTF-8, maxAge=90000
+22.08.2021 17:17:15.597 0 DEBUG    0x00004114 StaticFileController: cache timeout=60000, size=1000000
+22.08.2021 17:17:15.597 0 DEBUG    0x00004114 RequestMapper: created
+22.08.2021 17:17:15.605 0 DEBUG    0x00004114 HttpListener: Listening on port 8080
+22.08.2021 17:17:15.605 1 WARNING  0x00004114 Application has started
+22.08.2021 17:25:09.193 0 DEBUG    0x000024f0 QtWebApp has version 1.8.3
+22.08.2021 17:25:09.193 0 DEBUG    0x000024f0 StaticFileController: docroot=D:/Alpha/SwapJsonXmlServer/docroot, encoding=UTF-8, maxAge=90000
+22.08.2021 17:25:09.193 0 DEBUG    0x000024f0 StaticFileController: cache timeout=60000, size=1000000
+22.08.2021 17:25:09.193 0 DEBUG    0x000024f0 RequestMapper: created
+22.08.2021 17:25:09.201 0 DEBUG    0x000024f0 HttpListener: Listening on port 8080
+22.08.2021 17:25:09.201 1 WARNING  0x000024f0 Application has started
+22.08.2021 17:29:27.100 0 DEBUG    0x00000020 QtWebApp has version 1.8.3
+22.08.2021 17:29:27.100 0 DEBUG    0x00000020 StaticFileController: docroot=D:/Alpha/SwapJsonXmlServer/docroot, encoding=UTF-8, maxAge=90000
+22.08.2021 17:29:27.100 0 DEBUG    0x00000020 StaticFileController: cache timeout=60000, size=1000000
+22.08.2021 17:29:27.100 0 DEBUG    0x00000020 RequestMapper: created
+22.08.2021 17:29:27.109 0 DEBUG    0x00000020 HttpListener: Listening on port 8080
+22.08.2021 17:29:27.109 1 WARNING  0x00000020 Application has started

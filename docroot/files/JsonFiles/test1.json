@@ -1,0 +1,18 @@
+{
+    "orderID": 123456,
+    "shopperName": "John Smith",
+    "shopperEmail": "johnsmith@example.com",
+    "contents": [
+        {
+            "productID": 3444,
+            "productName": "SuperWidget",
+            "quantity": 1
+        },
+        {
+            "productID": 56,
+            "productName": "WonderWidget",
+            "quantity": 3
+        }
+    ],
+    "orderCompleted": true
+}
