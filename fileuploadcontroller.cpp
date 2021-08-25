@@ -118,16 +118,16 @@ QString FileUploadController::searchStorageDir(QString fileName)
     return nullptr;
 }
 
-QString FileUploadController::savePostFile(QString path, QTemporaryFile* tempFile)
+void FileUploadController::savePostFile(QString path, QTemporaryFile* tempFile)
 {
     QString fileName = path;
     QFile file(fileName);
 
     quint64 copyNumber = 1;
-    QRegularExpression regCopyNum("([(](?=\\d)\\d{1,}(?<=\\d])[)])(?=[.])");
+    QRegularExpression copyNum("([(](?=[0-9])[0-9]{1,}(?<=[0-9])[)])(?=[.])");
     while (file.exists())
     {
-        if (!fileName.contains(regCopyNum))
+        if (!fileName.contains(copyNum))
         {
             fileName.insert(fileName.lastIndexOf("."),
                             "(" + QString::number(copyNumber) + ")");
@@ -135,7 +135,7 @@ QString FileUploadController::savePostFile(QString path, QTemporaryFile* tempFil
         }
         else
         {
-            fileName.replace(regCopyNum,
+            fileName.replace(copyNum,
                              "(" + QString::number(copyNumber) + ")");
             file.setFileName(fileName);
         }
@@ -144,6 +144,5 @@ QString FileUploadController::savePostFile(QString path, QTemporaryFile* tempFil
     std::cout << "fileName -------" << qPrintable(fileName) << std::endl;
 
     file.open(QIODevice::WriteOnly);
-    QByteArray buffer = tempFile->read(2000000);
-
+    file.write(tempFile->read(2000000));
 }
