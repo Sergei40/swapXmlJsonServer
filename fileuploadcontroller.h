@@ -17,7 +17,8 @@ using namespace stefanfrings;
 */
 
 
-class FileUploadController : public HttpRequestHandler {
+class FileUploadController : public HttpRequestHandler
+{
     Q_OBJECT
     Q_DISABLE_COPY(FileUploadController)
 public:
@@ -25,8 +26,16 @@ public:
     /** Constructor */
     FileUploadController();
 
+    /** search docroot*/
+    QString searchStorageDir(QString fileName);
+
     /** Generates the response */
     void service(HttpRequest& request, HttpResponse& response);
+
+    /** creates a new file each time.
+     *  If the file names are the same, adds numbering to the name.
+     *  And returns the URI.*/
+    QString savePostFile(QString path, QTemporaryFile* file);
 };
 
 #endif // FILEUPLOADCONTROLLER_H
