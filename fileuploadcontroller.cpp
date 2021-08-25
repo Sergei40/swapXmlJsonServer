@@ -5,6 +5,7 @@
 #include <QRegularExpression>
 #include "fileuploadcontroller.h"
 #include "global.h"
+#include "jsonxx.h"
 
 #define REQ_FILE_SIZE 2000000;
 
@@ -25,8 +26,22 @@ void FileUploadController::service(HttpRequest& request, HttpResponse& response)
             QString fileName = request.getParameter("json");
             QString path = searchStorageDir(fileName) ;
 
-            savePostFile(path + fileName, jsonFile);
+            QString realPath = savePostFile(path + fileName, jsonFile);
+            QByteArray uri = "http:://" + request.getHeader("host") +
+                           request.getPath() +
+                           realPath.sliced(realPath.lastIndexOf("/")).toUtf8();
+            response.setHeader("Location", uri);
 
+            QFile jsonFile(realPath);
+            jsonFile.open(QIODevice::ReadOnly | QIODevice::Text);
+
+            std::string jsonStr = jsonFile.readAll().toStdString();
+            jsonFile.close();
+
+            jsonxx::Object json;
+            json.parse(jsonStr);
+            std::string buffer = json.xml(jsonxx::TaggedXML);
+            response.write(QByteArray::fromStdString(buffer));
         }
         else if (xmlFile)
         {
@@ -118,7 +133,8 @@ QString FileUploadController::searchStorageDir(QString fileName)
     return nullptr;
 }
 
-void FileUploadController::savePostFile(QString path, QTemporaryFile* tempFile)
+QString FileUploadController::savePostFile(QString path,
+                                           QTemporaryFile* tempFile)
 {
     QString fileName = path;
     QFile file(fileName);
@@ -141,8 +157,9 @@ void FileUploadController::savePostFile(QString path, QTemporaryFile* tempFile)
         }
         copyNumber++;
     }
-    std::cout << "fileName -------" << qPrintable(fileName) << std::endl;
 
     file.open(QIODevice::WriteOnly);
     file.write(tempFile->read(2000000));
+    file.close();
+    return fileName;
 }

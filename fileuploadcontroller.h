@@ -34,8 +34,9 @@ public:
 
     /** creates a new file each time.
      *  If the file names are the same, adds numbering to the name.
+     *  return the save file name
     */
-    void savePostFile(QString path, QTemporaryFile* file);
+    QString savePostFile(QString path, QTemporaryFile* file);
 };
 
 #endif // FILEUPLOADCONTROLLER_H
