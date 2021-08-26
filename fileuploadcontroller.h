@@ -1,8 +1,3 @@
-/**
-  @file
-  @author Stefan Frings
-*/
-
 #ifndef FILEUPLOADCONTROLLER_H
 #define FILEUPLOADCONTROLLER_H
 
