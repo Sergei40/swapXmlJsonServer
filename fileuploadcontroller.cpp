@@ -1,4 +1,3 @@
-#include <iostream>
 #include <QCoreApplication>
 #include <QDir>
 #include <QFile>
@@ -7,7 +6,6 @@
 #include "global.h"
 #include "jsonxx.h"
 #include "xml2json.hpp"
-#include <QJsonDocument>
 
 #define REQ_FILE_SIZE 2000000
 

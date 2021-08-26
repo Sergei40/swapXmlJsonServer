@@ -1,8 +1,3 @@
-/**
-  @file
-  @author Stefan Frings
-*/
-
 #include <QCoreApplication>
 #include "global.h"
 #include "requestmapper.h"
