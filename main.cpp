@@ -9,9 +9,6 @@ using namespace stefanfrings;
 /** Search the configuration file */
 QString searchConfigFile();
 
-/**
-  Entry point of the program.
-*/
 int main(int argc, char* argv[])
 {
     QCoreApplication app(argc, argv);
