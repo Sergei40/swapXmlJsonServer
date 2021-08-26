@@ -18,8 +18,8 @@ void FileDeleteController::service(HttpRequest& request, HttpResponse& response)
     {
         file.remove();
 
-        QByteArray uri = "http:://" + request.getHeader("host")
-                + realPath.sliced(realPath.indexOf("docroot") + 7).toUtf8();
+        QByteArray uri = "http:://" + request.getHeader("host") +
+                     realPath.sliced(realPath.indexOf("docroot") + 7).toUtf8();
         response.setHeader("Location", uri);
 
         response.write("File was deleted from server");

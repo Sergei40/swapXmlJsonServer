@@ -28,14 +28,14 @@ int main(int argc, char* argv[])
     logger->installMsgHandler();
 
     // Configure static file controller
-    QSettings* fileSettings =
-            new QSettings(configFileName, QSettings::IniFormat, &app);
+    QSettings* fileSettings = new QSettings(configFileName,
+                                            QSettings::IniFormat, &app);
     fileSettings->beginGroup("docroot");
     staticFileController = new StaticFileController(fileSettings, &app);
 
     // Configure and start the TCP listener
-    QSettings* listenerSettings =
-            new QSettings(configFileName, QSettings::IniFormat, &app);
+    QSettings* listenerSettings = new QSettings(configFileName,
+                                                QSettings::IniFormat, &app);
     listenerSettings->beginGroup("listener");
     new HttpListener(listenerSettings, new RequestMapper(&app), &app);
 
@@ -54,9 +54,10 @@ QString searchConfigFile()
     searchList.append(binDir);
     searchList.append(binDir + "/etc");
     searchList.append(binDir + "/../etc");
-    searchList.append(binDir + "/../" + appName + "/etc"); // for development with shadow build (Linux)
-    searchList.append(binDir + "/../../" + appName + "/etc"); // for development with
-                                                    // shadow build (Windows)
+    // for development with shadow build (Linux)
+    searchList.append(binDir + "/../" + appName + "/etc");
+    // for development with shadow build (Windows)
+    searchList.append(binDir + "/../../" + appName + "/etc");
     searchList.append(QDir::rootPath() + "etc/opt");
     searchList.append(QDir::rootPath() + "etc");
 

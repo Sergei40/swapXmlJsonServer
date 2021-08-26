@@ -11,7 +11,7 @@
 
 #define REQ_FILE_SIZE 2000000
 
-FileUploadController::FileUploadController() {}
+FileUploadController::FileUploadController() { }
 
 void FileUploadController::service(HttpRequest& request, HttpResponse& response)
 {
@@ -27,10 +27,10 @@ void FileUploadController::service(HttpRequest& request, HttpResponse& response)
             response.setHeader("Content-Type", "appcitaion/xml");
 
             QString fileName = request.getParameter("json");
-            QString path = searchStorageDir(fileName) ;
+            QString path = searchStorageDir(fileName);
             QString realPath = savePostFile(path + "/" + fileName, jsonTmpFile);
             QByteArray uri = "http:://" + request.getHeader("host") +
-                           realPath.sliced(realPath.indexOf("docroot")+7).toUtf8();
+                       realPath.sliced(realPath.indexOf("docroot")+7).toUtf8();
             response.setHeader("Location", uri);
 
             QFile jsonFile(realPath);
@@ -50,9 +50,9 @@ void FileUploadController::service(HttpRequest& request, HttpResponse& response)
 
             QString fileName = request.getParameter("xml");
             QString path = searchStorageDir(fileName);
-            QString realPath = savePostFile(path  + "/" + fileName, xmlTmpFile);
+            QString realPath = savePostFile(path + "/" + fileName, xmlTmpFile);
             QByteArray uri = "http:://" + request.getHeader("host") +
-                    realPath.sliced(realPath.indexOf("docroot")+7).toUtf8();
+                       realPath.sliced(realPath.indexOf("docroot")+7).toUtf8();
             response.setHeader("Location", uri);
 
             QFile xmlFile(realPath);
@@ -91,7 +91,7 @@ void FileUploadController::service(HttpRequest& request, HttpResponse& response)
                 jsonFile.close();
 
                 QByteArray uri = "http:://" + request.getHeader("host") +
-                        realPath.sliced(realPath.indexOf("docroot")+7).toUtf8();
+                       realPath.sliced(realPath.indexOf("docroot")+7).toUtf8();
                 response.setHeader("Location", uri);
 
                 jsonFile.open(QIODevice::ReadOnly | QIODevice::Text);
@@ -104,7 +104,8 @@ void FileUploadController::service(HttpRequest& request, HttpResponse& response)
                 std::string buffer = json.xml(jsonxx::TaggedXML);
                 response.write(QByteArray::fromStdString(buffer));
             }
-            else response.write("upload failed, file not exists");
+            else
+                response.write("upload failed, file not exists");
         }
         else if (xmlTmpFile)
         {
@@ -123,7 +124,7 @@ void FileUploadController::service(HttpRequest& request, HttpResponse& response)
                 xmlFile.close();
 
                 QByteArray uri = "http:://" + request.getHeader("host") +
-                        realPath.sliced(realPath.indexOf("docroot")+7).toUtf8();
+                      realPath.sliced(realPath.indexOf("docroot")+7).toUtf8();
                 response.setHeader("Location", uri);
 
                 xmlFile.open(QIODevice::ReadOnly | QIODevice::Text);
@@ -132,7 +133,8 @@ void FileUploadController::service(HttpRequest& request, HttpResponse& response)
                 xmlFile.close();
                 response.write(QByteArray::fromStdString(xmlStr));
             }
-            else response.write("upload failed, file not exists");
+            else
+                response.write("upload failed, file not exists");
         }
         else
         {
@@ -197,8 +199,7 @@ QString FileUploadController::savePostFile(QString path,
         }
         else
         {
-            fileName.replace(copyNum,
-                             "(" + QString::number(copyNumber) + ")");
+            fileName.replace(copyNum, "(" + QString::number(copyNumber) + ")");
             file.setFileName(fileName);
         }
         copyNumber++;

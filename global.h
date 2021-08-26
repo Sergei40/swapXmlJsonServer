@@ -12,9 +12,9 @@ using namespace stefanfrings;
 */
 
 /** Controller for static files */
-extern  StaticFileController* staticFileController;
+extern StaticFileController* staticFileController;
 
 /** Redirects log messages to a file */
-extern  FileLogger* logger;
+extern FileLogger* logger;
 
 #endif // GLOBAL_H

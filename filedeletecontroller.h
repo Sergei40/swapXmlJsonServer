@@ -10,7 +10,8 @@ using namespace stefanfrings;
 /**
   This controller displays a HTML form for file upload and recieved the file.
 */
-class FileDeleteController : public HttpRequestHandler {
+class FileDeleteController : public HttpRequestHandler
+{
     Q_OBJECT
     Q_DISABLE_COPY(FileDeleteController)
 public:
