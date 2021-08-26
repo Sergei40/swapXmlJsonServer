@@ -16,6 +16,12 @@ SOURCES += \
         main.cpp \
         requestmapper.cpp
 
+HEADERS += \
+    filedeletecontroller.h \
+    fileuploadcontroller.h \
+    global.h \
+    requestmapper.h
+
 OTHER_FILES += etc/* etc/docroot/* logs/*
 
 #---------------------------------------------------------------------------------------
@@ -38,9 +44,3 @@ include(xml2json/include/xml2json.pri)
 #qnx: target.path = /tmp/$${TARGET}/bin
 #else: unix:!android: target.path = /opt/$${TARGET}/bin
 #!isEmpty(target.path): INSTALLS += target
-
-HEADERS += \
-    filedeletecontroller.h \
-    fileuploadcontroller.h \
-    global.h \
-    requestmapper.h
