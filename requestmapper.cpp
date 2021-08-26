@@ -35,7 +35,8 @@ void RequestMapper::service(HttpRequest& request, HttpResponse& response)
     {
         staticFileController->service(request,response);
     }
-    else if (path.startsWith("/files"))
+    else if (path.startsWith("/files") &&
+             (request.getMethod() == "POST" || request.getMethod() == "PUT"))
     {
         FileUploadController().service(request, response);
     }

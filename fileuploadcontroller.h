@@ -27,7 +27,7 @@ public:
     FileUploadController();
 
     /** search docroot*/
-    QString searchStorageDir(QString fileName);
+    static QString searchStorageDir(QString fileName);
 
     /** Generates the response */
     void service(HttpRequest& request, HttpResponse& response);

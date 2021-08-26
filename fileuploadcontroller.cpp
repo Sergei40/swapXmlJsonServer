@@ -11,7 +11,7 @@
 
 #define REQ_FILE_SIZE 2000000
 
-FileUploadController::FileUploadController() { }
+FileUploadController::FileUploadController() {}
 
 void FileUploadController::service(HttpRequest& request, HttpResponse& response)
 {
