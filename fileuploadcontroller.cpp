@@ -6,8 +6,10 @@
 #include "fileuploadcontroller.h"
 #include "global.h"
 #include "jsonxx.h"
+#include "xml2json.hpp"
+#include <QJsonDocument>
 
-#define REQ_FILE_SIZE 2000000;
+#define REQ_FILE_SIZE 2000000
 
 FileUploadController::FileUploadController() { }
 
@@ -18,18 +20,17 @@ void FileUploadController::service(HttpRequest& request, HttpResponse& response)
     //-------------------------------------------------------------------------
     if (request.getMethod() == "POST")
     {
-        QTemporaryFile* jsonFile = request.getUploadedFile("json");
-        QTemporaryFile* xmlFile = request.getUploadedFile("xml");
-        if (jsonFile)
+        QTemporaryFile* jsonTmpFile = request.getUploadedFile("json");
+        QTemporaryFile* xmlTmpFile = request.getUploadedFile("xml");
+        if (jsonTmpFile)
         {
             response.setHeader("Content-Type", "appcitaion/xml");
+
             QString fileName = request.getParameter("json");
             QString path = searchStorageDir(fileName) ;
-
-            QString realPath = savePostFile(path + fileName, jsonFile);
+            QString realPath = savePostFile(path + "/" + fileName, jsonTmpFile);
             QByteArray uri = "http:://" + request.getHeader("host") +
-                           request.getPath() +
-                           realPath.sliced(realPath.lastIndexOf("/")).toUtf8();
+                           realPath.sliced(realPath.indexOf("docroot")+7).toUtf8();
             response.setHeader("Location", uri);
 
             QFile jsonFile(realPath);
@@ -43,13 +44,23 @@ void FileUploadController::service(HttpRequest& request, HttpResponse& response)
             std::string buffer = json.xml(jsonxx::TaggedXML);
             response.write(QByteArray::fromStdString(buffer));
         }
-        else if (xmlFile)
+        else if (xmlTmpFile)
         {
             response.setHeader("Content-Type", "appcitaion/json");
+
             QString fileName = request.getParameter("xml");
             QString path = searchStorageDir(fileName);
-            std::cout << qPrintable(path) << std::endl;
-            savePostFile(path + fileName, xmlFile);
+            QString realPath = savePostFile(path  + "/" + fileName, xmlTmpFile);
+            QByteArray uri = "http:://" + request.getHeader("host") +
+                    realPath.sliced(realPath.indexOf("docroot")+7).toUtf8();
+            response.setHeader("Location", uri);
+
+            QFile xmlFile(realPath);
+            xmlFile.open(QIODevice::ReadOnly | QIODevice::Text);
+
+            const auto xmlStr = xml2json(xmlFile.readAll().constData());
+            xmlFile.close();
+            response.write(QByteArray::fromStdString(xmlStr));
         }
         else
         {
@@ -61,36 +72,71 @@ void FileUploadController::service(HttpRequest& request, HttpResponse& response)
     //-------------------------------------------------------------------------
     else if (request.getMethod() == "PUT")
     {
-        QTemporaryFile* jsonFile = request.getUploadedFile("json");
-        QTemporaryFile* xmlFile = request.getUploadedFile("xml");
-        if (jsonFile)
+        QTemporaryFile* jsonTmpFile = request.getUploadedFile("json");
+        QTemporaryFile* xmlTmpFile = request.getUploadedFile("xml");
+        if (jsonTmpFile)
         {
             response.setHeader("Content-Type", "appcitaion/xml");
+
+            QString fileName = request.getParameter("json");
+            QString path = searchStorageDir(fileName);
+            QString reqPath = request.getPath();
+            QString realPath = path + reqPath.sliced(reqPath.lastIndexOf("/"));
+
+            QFile jsonFile(realPath);
+            if (jsonFile.exists())
+            {
+                jsonFile.open(QIODevice::WriteOnly);
+                jsonFile.write(jsonTmpFile->read(REQ_FILE_SIZE));
+                jsonFile.close();
+
+                QByteArray uri = "http:://" + request.getHeader("host") +
+                        realPath.sliced(realPath.indexOf("docroot")+7).toUtf8();
+                response.setHeader("Location", uri);
+
+                jsonFile.open(QIODevice::ReadOnly | QIODevice::Text);
+
+                std::string jsonStr = jsonFile.readAll().toStdString();
+                jsonFile.close();
+
+                jsonxx::Object json;
+                json.parse(jsonStr);
+                std::string buffer = json.xml(jsonxx::TaggedXML);
+                response.write(QByteArray::fromStdString(buffer));
+            }
+            else response.write("upload failed, file not exists");
         }
-        else if (xmlFile)
+        else if (xmlTmpFile)
         {
             response.setHeader("Content-Type", "appcitaion/json");
-        }
-        else
-        {
-            response.write("upload failed");
-        }
-    }
-    else if (request.getParameter("action") == "show")
-    {
-        response.setHeader("Content-Type", "image/jpeg");
-        QTemporaryFile* file = request.getUploadedFile("file1");
-        if (file)
-        {
-            while (!file->atEnd() && !file->error())
+
+            QString fileName = request.getParameter("xml");
+            QString path = searchStorageDir(fileName);
+            QString reqPath = request.getPath();
+            QString realPath = path + reqPath.sliced(reqPath.lastIndexOf("/"));
+
+            QFile xmlFile(realPath);
+            if (xmlFile.exists())
             {
-                QByteArray buffer = file->read(65536);
-                response.write(buffer);
+                xmlFile.open(QIODevice::WriteOnly);
+                xmlFile.write(xmlTmpFile->read(REQ_FILE_SIZE));
+                xmlFile.close();
+
+                QByteArray uri = "http:://" + request.getHeader("host") +
+                        realPath.sliced(realPath.indexOf("docroot")+7).toUtf8();
+                response.setHeader("Location", uri);
+
+                xmlFile.open(QIODevice::ReadOnly | QIODevice::Text);
+
+                const auto xmlStr = xml2json(xmlFile.readAll().constData());
+                xmlFile.close();
+                response.write(QByteArray::fromStdString(xmlStr));
             }
+            else response.write("upload failed, file not exists");
         }
         else
         {
-            response.write("upload failed");
+            response.write("upload failed, file not found");
         }
     }
     else
@@ -120,7 +166,7 @@ QString FileUploadController::searchStorageDir(QString fileName)
         {
             storageDir = QDir(dir).canonicalPath();
             qDebug("Using storage directory %s", qPrintable(storageDir));
-            return storageDir + "/";
+            return storageDir;
         }
     }
 
@@ -159,7 +205,7 @@ QString FileUploadController::savePostFile(QString path,
     }
 
     file.open(QIODevice::WriteOnly);
-    file.write(tempFile->read(2000000));
+    file.write(tempFile->read(REQ_FILE_SIZE));
     file.close();
     return fileName;
 }
