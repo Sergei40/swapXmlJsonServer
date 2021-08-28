@@ -5,7 +5,7 @@
 
 ## Примеры запросов из PowerShell
 
-```php
+```powershell
 curl.exe -i -X POST -F "json=@C:/Users/Sergei/Desktop/test1.json" http://localhost:8080/files/
 curl.exe -i -X POST -F "xml=@C:/Users/Sergei/Desktop/test.xml" http://localhost:8080/files/
 curl.exe -i -X PUT -F "xml=@C:/Users/Sergei/Desktop/test.xml" http://localhost:8080/files/test%281%29.xml
